@@ -1,0 +1,219 @@
+.booking {
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("https://images.unsplash.com/photo-1559305616-3f99cd43e353?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8Y2FmZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80");
+  background-size: cover;
+}
+
+.bookingTop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.bookingTitle {
+  margin: 10px;
+  padding: 5px;
+  border-bottom: solid 1px #636060;
+  text-align: center;
+  font-family: "Varela Round", sans-serif;
+  font-size: 40px;
+  line-height: 25px;
+  color: #222222;
+  font-weight: 600;
+}
+
+.bookingTableName {
+  font-size: 25px;
+  padding-bottom: 2%;
+  margin-top: 10px;
+}
+
+.reservation-error {
+  color: #c0392b;
+  font-size: 1.1rem;
+  padding-bottom: 3%;
+}
+
+.bookingPage {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.bookingItem {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.bookingItemEach {
+  margin: 25px;
+  text-align: center;
+}
+
+.bookingOption {
+  width: 350px;
+  padding: 15px 0;
+  background-color: rgb(83, 85, 87);
+  color: white;
+  font-family: "Roboto";
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.bookingOptionItem:hover {
+  background-color: rgb(54, 53, 53);
+  color: white;
+  border-radius: 5px;
+}
+
+.bookingOptionItem:active {
+  background-color: white;
+  color: black;
+  border-radius: solid;
+}
+
+.bookingOptionMenu {
+  outline: none;
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 5px;
+  background-color: grey;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.bookingTableMessage {
+  padding: 2% 0;
+  text-align: center;
+  font-size: 1.3rem;
+  color: white;
+}
+
+.tablesDisplay {
+  background-color: rgb(83, 85, 87, 0.8);
+  margin: 10% 2%;
+  padding: 3% 5%;
+  border-radius: 25px;
+}
+
+@media (min-width: 768px) {
+  .tablesDisplay {
+    margin: 6% 2.5%;
+  }
+}
+
+.tableKey {
+  padding: 15px 0;
+  color: white;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.availableNumbers {
+  color: white;
+  border-bottom: solid 1px #a39d9d;
+  font-size: 25px;
+  font-family: Roboto, sans-serif;
+  text-align: center;
+}
+
+.fullTable {
+  background-color: red;
+  border: solid 2px white;
+  border-radius: 50%;
+  padding: 1px 10px;
+  margin: 3px;
+}
+
+.emptyTable {
+  background-color: #0074d9;
+  border: solid 2px white;
+  border-radius: 50%;
+  padding: 1px 10px;
+  margin: 3px;
+}
+
+.getTables {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+body {
+  font-family: ABeeZee, sans-serif;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  display: none;
+}
+
+.reservation {
+  display: flex;
+  flex-direction: column;
+}
+
+.reservationTitle {
+  font-size: 50px;
+}
+
+.reservationForm {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(109, 111, 112, 0.6);
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.reservationForm > label {
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: 550;
+}
+
+.reservationInput {
+  padding: 10px;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.reservationButton {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: rgb(83, 85, 87);
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 550;
+}
+
+.linkBook {
+  margin-top: 20px;
+  color: #e22929;
+}

@@ -1,0 +1,42 @@
+.payment {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.paymentNotice {
+  margin-top: 15px;
+  color: #c0392b;
+  font-size: 1.1rem;
+  padding-bottom: 3%;
+  font-weight: bold;
+}
+
+.paymentButton {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: rgb(83, 85, 87);
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 550;
+}
+
+.paymentTitle {
+  margin-top: 90%;
+  color: blue;
+  font-size: 25px;
+  padding-bottom: 3%;
+  font-weight: bold;
+}
+
+.paymentCard {
+  margin-top: 10px;
+  color: blue;
+  font-size: 20px;
+  padding-bottom: 3%;
+  font-weight: bold;
+}

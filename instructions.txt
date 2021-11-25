@@ -1,0 +1,19 @@
+***** api *****
+yarn add express mongoose dotenv nodemon bcrypt cookie-parser morgan cors stripe
+
+***** client *****
+yarn add react-router-dom@5.2.0
+yarn add bootstrap react-bootstrap
+yarn add react-datepicker date-fns
+yarn add axios
+yarn add reactstrap
+yarn add react-stripe-checkout
+
+****************************************************************
+1/ Open the folder using VSCode
+2/ Go to new Terminal
+3/ type "cd api" enter
+4/ type "yarn start" enter
+5/ Split Terminal to another One
+6/ type "cd client" enter
+7/ type "yarn start" enter 
