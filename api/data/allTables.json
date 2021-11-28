@@ -16,5 +16,37 @@
         {"name":"Table 15","capacity":6,"isAvailable":true},
         {"name":"Table 16","capacity":6,"isAvailable":true},
         {"name":"Table 17","capacity":8,"isAvailable":true},
-        {"name":"Table 18","capacity":8,"isAvailable":true}
+        {"name":"Table 18","capacity":8,"isAvailable":true},
+        {"name":"Table 2 + 3", "capacity":4, "isAvailable":false},
+
+        {"name":"Table 1 + Table 2","if": {"capacity":4}, 
+            "then":{"if":{"isAvailable":false}, "then":{
+                "if":{"tables":[{"name":"Table 1", "capacity":2, "isAvailable":true},{"name":"Table 2", "capacity":2, "isAvailable":true}]}, 
+                "then":{"tables":[{"name":"Table 1", "capacity":2, "isAvailable":false},{"name":"Table 2", "capacity":2, "isAvailable":false}],"isAvailable":true}
+            }}},
+        {"name":"Table 1 + Table 3", "capacity":4,"if":
+            {"tables":[{"name":"Table 1", "capacity":2, "isAvailable":true},{"name":"Table 3", "capacity":2, "isAvailable":true}]}, 
+            "then":{"tables":[{"name":"Table 1", "capacity":2, "isAvailable":false}, {"name":"Table 3", "capacity":2, "isAvailable":false}]}, "else":{"isAvailable":false}},
+        {"name":"Table 1 + Table 4", "capacity":4,"if":
+            {"tables":[{"name":"Table 1", "capacity":2, "isAvailable":true},{"name":"Table 4", "capacity":2, "isAvailable":true}]}, 
+            "then":{"tables":[{"name":"Table 1", "capacity":2, "isAvailable":false}, {"name":"Table 4", "capacity":2, "isAvailable":false}]}, "else":{"isAvailable":false}}, 
+        {"name":"Table 1 + Table 5", "capacity":4,"if":
+            {"tables":[{"name":"Table 1", "capacity":2, "isAvailable":true},{"name":"Table 5", "capacity":2, "isAvailable":true}]}, 
+            "then":{"tables":[{"name":"Table 1", "capacity":2, "isAvailable":false}, {"name":"Table 5", "capacity":2, "isAvailable":false}]}, "else":{"isAvailable":false}},
+        {"name":"Table 1 + Table 6", "capacity":4,"if":
+            {"tables":[{"name":"Table 1", "capacity":2, "isAvailable":true},{"name":"Table 6", "capacity":2, "isAvailable":true}]}, 
+            "then":{"tables":[{"name":"Table 1", "capacity":2, "isAvailable":false}, {"name":"Table 6", "capacity":2, "isAvailable":false}]},
+             "else":{"isAvailable":false}},
+        {"name":"Table 2 + 3", "capacity":4, "isAvailable":false},
+        {"if":{"tables":[
+                        {"name":"Table 2", "capacity":2, "isAvailable":true},
+                        {"name":"Table 3", "capacity":2, "isAvailable":true},
+                        {"name":"Table 7", "capacity":4, "isAvailable":false},
+                        {"name":"Table 8", "capacity":4, "isAvailable":false},
+                        {"name":"Table 9", "capacity":4, "isAvailable":false},
+                        {"name":"Table 10","capacity":4, "isAvailable":false},
+                        {"name":"Table 11", "capacity":4, "isAvailable":false},
+                        {"name":"Table 12", "capacity":4,"isAvailable":false}]}, 
+            "then":{"tables":[{"name":"Table 2 + 3", "capacity":4, "isAvailable":true}]},
+            "else":{"tables":[{"name":"Table 2 + 3", "capacity":4, "isAvailable":false}]}}
         ]}
