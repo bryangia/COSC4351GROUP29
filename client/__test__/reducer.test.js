@@ -2,7 +2,9 @@ const Reducer = require('../src/context/Reducer');
 
 test("Reducer with login start", () => {
     const mock_state = {type: "LOGIN_START",
-                        payload: "mock_payload"}
+                        payload: "mock_payload",
+                        payment: function lambda(value) {return(true);},
+                        }
     
     expect(Reducer({}, mock_state)).toEqual(
         {

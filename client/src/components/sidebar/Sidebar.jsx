@@ -1,4 +1,5 @@
 import "./sidebar.css";
+import { Link } from "react-router-dom";
 
 export default function Sidebar() {
   return (
@@ -19,6 +20,13 @@ export default function Sidebar() {
           <i className="sidebarIcon fab fa-twitter-square"></i>
         </div>
       </div>
+
+      <li className="sidebarTitle" to="/employeeLogin">
+        <Link className="link">
+          Employee Login
+        </Link>
+      </li>
+     
     </div>
   );
 }
