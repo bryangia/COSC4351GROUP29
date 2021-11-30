@@ -17,6 +17,11 @@ export default function Topbar() {
         <i className="topIcon fab fa-instagram-square"></i>
         <i className="topIcon fab fa-pinterest-square"></i>
         <i className="topIcon fab fa-twitter-square"></i>
+        <li>
+          <Link className="link" to="/employeeLogin">
+            Employee Login
+          </Link>
+        </li>
       </div>
       <div className="topCenter">
         <ul className="topList">
