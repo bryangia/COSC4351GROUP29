@@ -32,7 +32,9 @@ export default function Table(props) {
         className={props.empty ? "table selectableTable" : "table"}
         onClick={(_) => {
           props.empty
-            ? props.selectTable(props.name, props.id)
+            ? props.available
+              ? props.selectTable(props.name, props.id, props.chairs)
+              : props.selectTable(props.name, props.id)
             : console.log("CANNOT Get Full Table");
         }}
       >

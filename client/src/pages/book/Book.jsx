@@ -19,7 +19,27 @@ export default function Book() {
     setPayment(data);
   };
 
-  const [totalTables, setTotalTables] = useState([]);
+  // const [totalTables, setTotalTables] = useState([]);
+  const [availableTables, setAvailableTables] = useState([]);
+  const [sizeTables, setSizeTables] = useState([]);
+
+  const filterTable = (totalTables) => {
+    let tableSize = selection.size;
+    if (tableSize % 2 === 1) {
+      tableSize = tableSize + 1;
+    }
+    let sizeTable = [];
+    let availTable = [];
+    totalTables.forEach((table) => {
+      if (table.capacity < tableSize) {
+        availTable.push(table);
+      } else {
+        sizeTable.push(table);
+      }
+    });
+    setAvailableTables(availTable);
+    setSizeTables(sizeTable);
+  };
 
   // Information about table and date
   const [selection, setSelection] = useState({
@@ -29,6 +49,19 @@ export default function Book() {
     },
     datetime: null,
     size: null,
+  });
+
+  const [selectCombine, setSelectCombine] = useState({
+    table1: {
+      name: null,
+      id: null,
+      size: null,
+    },
+    table2: {
+      name: null,
+      id: null,
+      size: null,
+    },
   });
 
   // Information about reservation's user
@@ -46,6 +79,30 @@ export default function Book() {
       table: {
         name: table_name,
         id: table_id,
+      },
+    });
+  };
+
+  // Click and choose table1
+  const selectCombineTable1 = (table_name, table_id, table_size) => {
+    setSelectCombine({
+      ...selectCombine,
+      table1: {
+        name: table_name,
+        id: table_id,
+        size: table_size,
+      },
+    });
+  };
+
+  // Click and choose table2
+  const selectCombineTable2 = (table_name, table_id, table_size) => {
+    setSelectCombine({
+      ...selectCombine,
+      table2: {
+        name: table_name,
+        id: table_id,
+        size: table_size,
       },
     });
   };
@@ -78,11 +135,48 @@ export default function Book() {
 
   // Create tables
   const getTables = (_) => {
-    console.log("Getting tables");
+    // console.log("Getting same size tables");
     if (getEmptyTables() > 0) {
       let tables = [];
-      totalTables.forEach((table) => {
-        if (table.isAvailable) {
+      sizeTables.forEach((table) => {
+        if (table.capacity)
+          if (table.isAvailable) {
+            tables.push(
+              <Table
+                key={table._id}
+                id={table._id}
+                chairs={table.capacity}
+                name={table.name}
+                empty
+                selectTable={selectTable}
+              />
+            );
+          } else {
+            tables.push(
+              <Table
+                key={table._id}
+                id={table._id}
+                chairs={table.capacity}
+                name={table.name}
+                selectTable={selectTable}
+              />
+            );
+          }
+      });
+      return tables;
+    }
+  };
+
+  // Create tables
+  const getAvailableTables = (_) => {
+    // console.log("Getting available tables");
+    let tables = [];
+    availableTables.forEach((table) => {
+      if (table.isAvailable)
+        if (
+          selectCombine.table1.size === null &&
+          selectCombine.table2.size === null
+        ) {
           tables.push(
             <Table
               key={table._id}
@@ -90,28 +184,33 @@ export default function Book() {
               chairs={table.capacity}
               name={table.name}
               empty
-              selectTable={selectTable}
+              available
+              selectTable={selectCombineTable1}
             />
           );
         } else {
-          tables.push(
-            <Table
-              key={table._id}
-              id={table._id}
-              chairs={table.capacity}
-              name={table.name}
-              selectTable={selectTable}
-            />
-          );
+          if (table.capacity === selection.size - selectCombine.table1.size)
+            if (table._id !== selectCombine.table1.id) {
+              tables.push(
+                <Table
+                  key={table._id}
+                  id={table._id}
+                  chairs={table.capacity}
+                  name={table.name}
+                  empty
+                  available
+                  selectTable={selectCombineTable2}
+                />
+              );
+            }
         }
-      });
-      return tables;
-    }
+    });
+    return tables;
   };
 
   // Get total number of available tables
   const getEmptyTables = (_) => {
-    let tables = totalTables.filter((table) => table.isAvailable);
+    let tables = sizeTables.filter((table) => table.isAvailable);
     return tables.length;
   };
 
@@ -151,27 +250,28 @@ export default function Book() {
         });
         res = await res.json();
 
+        // Get all tables same size as selection
         let tableSize = selection.size;
         if (tableSize % 2 === 1) {
           tableSize = tableSize + 1;
         }
         let tables = res.tables.filter((table) =>
-          selection.size > 0 ? table.capacity === tableSize : true
+          selection.size > 0 ? table.capacity <= tableSize : true
         );
-        setTotalTables(tables);
+        filterTable(tables);
       })();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selection.datetime, selection.size]);
 
   // API *** Store Reservation to database
-  const reserve = async (e) => {
+  const reserve = async (_) => {
     if (
       (booking.name.length === 0) |
       (booking.phone.length === 0) |
       (booking.email.length === 0)
     ) {
-      e.preventDefault();
+      _.preventDefault();
       console.log("Incomplete Details");
       setError(true);
     } else {
@@ -188,9 +288,68 @@ export default function Book() {
             table: selection.table.id,
           }),
         });
-        res = await res.text();
+        // window.location.replace("/thankyou");
+        res = await res.json();
         console.log("Reserved: " + res);
         window.location.replace("/thankyou");
+      } catch (err) {}
+    }
+  };
+
+  // API *** Store Reservation to database
+  const reserveCombine = async (e) => {
+    if (
+      (booking.name.length === 0) |
+      (booking.phone.length === 0) |
+      (booking.email.length === 0)
+    ) {
+      e.preventDefault();
+      console.log("Incomplete Details");
+      setError(true);
+    } else {
+      try {
+        let selectedDate = selection.datetime.toUTCString();
+        let res = await Promise.all([
+          fetch("http://localhost:5000/api/reserve", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...booking,
+              date: selectedDate,
+              table: selectCombine.table1.id,
+            }),
+          }),
+          fetch("http://localhost:5000/api/reserve", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              ...booking,
+              date: selectedDate,
+              table: selectCombine.table2.id,
+            }),
+          }),
+          fetch("http://localhost:5000/api/combine", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: user ? user._id : null,
+              date: selection.datetime.toUTCString(),
+              table1: selectCombine.table1.name,
+              table2: selectCombine.table2.name,
+            }),
+          }),
+        ]);
+        res.forEach((response) => {
+          response = response.json();
+          console.log("Reserved: " + response);
+          window.location.replace("/thankyou");
+        });
       } catch (err) {}
     }
   };
@@ -199,7 +358,9 @@ export default function Book() {
     <div className="booking">
       <div className="bookingTop">
         <span className="bookingTitle">
-          {!selection.table.id ? "Available Tables" : "Confirm Reservation"}
+          {!selection.table.id && !selectCombine.table2.id
+            ? "Available Tables"
+            : "Confirm Reservation"}
         </span>
         {!user && (
           <Link className="linkBook" to="/register">
@@ -207,12 +368,18 @@ export default function Book() {
           </Link>
         )}
         <span className="bookingTableName">
-          {selection.table.id
-            ? "You are booking " +
+          {selection.table.id &&
+            "You are booking " +
               selection.table.name +
               " at " +
-              selection.datetime.toLocaleString("en-US")
-            : null}
+              selection.datetime.toLocaleString("en-US")}
+          {selectCombine.table2.id &&
+            "You are booking " +
+              selectCombine.table1.name +
+              " and " +
+              selectCombine.table2.name +
+              " at " +
+              selection.datetime.toLocaleString("en-US")}
         </span>
 
         {error && (
@@ -222,7 +389,7 @@ export default function Book() {
         )}
       </div>
 
-      {!selection.table.id ? (
+      {!selection.table.id && !selectCombine.table2.id ? (
         <div id="reservation-stuff" className="bookingPage">
           <div className="bookingItems">
             <div className="bookingItemEach">
@@ -256,11 +423,11 @@ export default function Book() {
           </div>
           <div className="tablesDisplay">
             <div>
-              {getEmptyTables() > 0 ? (
+              {getEmptyTables() > 0 && (
                 <div className="availableNumbers">
                   {getEmptyTables()} Available Tables
                 </div>
-              ) : null}
+              )}
 
               {selection.datetime && selection.size ? (
                 getEmptyTables() > 0 ? (
@@ -274,7 +441,25 @@ export default function Book() {
                     <div className="getTables">{getTables()}</div>
                   </div>
                 ) : (
-                  <div className="bookingTableMessage">No Available Tables</div>
+                  <div>
+                    <div className="bookingTableMessage2">
+                      No Available Tables Size {selection.size} - Please select
+                      two combination tables or different size !
+                    </div>
+                    {selectCombine.table1.size && (
+                      <div className="bookingTableMessage2">
+                        First selection: {selectCombine.table1.name} size{" "}
+                        {selectCombine.table1.size}
+                      </div>
+                    )}
+                    <div className="tableKey">
+                      <span className="emptyTable"></span> &nbsp; Available
+                      &nbsp;&nbsp;
+                      <span className="fullTable"></span> &nbsp; Unavailable
+                      &nbsp;&nbsp;
+                    </div>
+                    <div className="getTables">{getAvailableTables()}</div>
+                  </div>
                 )
               ) : (
                 <div className="bookingTableMessage">
@@ -295,7 +480,10 @@ export default function Book() {
           )}
 
           {(!checkWeekend() || payment) && (
-            <form className="reservationForm" onSubmit={reserve}>
+            <form
+              className="reservationForm"
+              onSubmit={selection.table.id ? reserve : reserveCombine}
+            >
               <label>Name</label>
               <input
                 className="reservationInput"
@@ -311,7 +499,7 @@ export default function Book() {
               <label>Email</label>
               <input
                 className="reservationInput"
-                type="text"
+                type="email"
                 placeholder="Enter your email..."
                 onChange={(e) => {
                   setBooking({
@@ -323,7 +511,7 @@ export default function Book() {
               <label>Phone Number</label>
               <input
                 className="reservationInput"
-                type="text"
+                type="number"
                 placeholder="Enter your phone number..."
                 onChange={(e) => {
                   setBooking({

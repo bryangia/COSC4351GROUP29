@@ -1,7 +1,6 @@
 import TopBar from "./components/topbar/TopBar";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import EmployeeLogin from "./pages/employeeLogin/employeeLogin"
 import Register from "./pages/register/Register";
 import Book from "./pages/book/Book";
 import ThankYou from "./pages/thankyou/Thankyou";
@@ -29,7 +28,6 @@ function App() {
         </Route>
         <Route path="/register">{user ? <Home /> : <Register />}</Route>
         <Route path="/login">{user ? <Home /> : <Login />}</Route>
-        <Route path="/employeeLogin">{user ? <Home /> : <EmployeeLogin />}</Route>
       </Switch>
     </Router>
   );

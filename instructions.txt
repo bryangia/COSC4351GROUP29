@@ -1,4 +1,5 @@
 ***** api *****
+yarn install
 yarn add express mongoose dotenv nodemon bcrypt cookie-parser morgan cors stripe
 
 ***** client *****

@@ -56,7 +56,7 @@ export default function Login() {
       </form>
       {error && (
         <span style={{ color: "red", marginTop: "10px" }}>
-          Something went wrong!
+          Wrong credentials!!
         </span>
       )}
     </div>

@@ -8,6 +8,7 @@ dotenv.config();
 const authRoute = require("./routes/auth");
 const stripeRoute = require("./routes/stripe");
 const paymentRoute = require("./routes/payment");
+const combineRoute = require("./routes/combineAlert");
 const availabilityRoute = require("./routes/availabilityRoute");
 const reservationRoute = require("./routes/reservationRoute");
 
@@ -31,6 +32,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/availability", availabilityRoute);
 app.use("/api/reserve", reservationRoute);
 app.use("/api/payment", paymentRoute);
+app.use("/api/combine", combineRoute);
 app.use("/api/checkout", stripeRoute);
 
 app.listen("5000", () => {

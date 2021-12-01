@@ -103,6 +103,14 @@
   color: white;
 }
 
+.bookingTableMessage2 {
+  padding: 2% 0;
+  text-align: center;
+  font-size: 1.3rem;
+  color: lightcoral;
+  border-bottom: solid 1px white;
+}
+
 .tablesDisplay {
   background-color: rgb(83, 85, 87, 0.8);
   margin: 10% 2%;
@@ -216,4 +224,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .linkBook {
   margin-top: 20px;
   color: #e22929;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
