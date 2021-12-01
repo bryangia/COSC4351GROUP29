@@ -23,8 +23,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
+  },
+  "jest":{
+    "moduleNameMapper":{
+         "\\.(css|less|sass|scss)$": "<rootDir>/__test__/__mocks__/styleMock.js",
+         "\\.(gif|ttf|eot|svg)$": "<rootDir>/__test__/__mocks__/fileMock.js"
+    }
   },
   "eslintConfig": {
     "extends": [
